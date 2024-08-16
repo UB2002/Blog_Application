@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 
-class BlogDetailScreen extends StatelessWidget {
+class BlogDetailScreen extends StatefulWidget {
+  @override
+  _BlogDetailScreenState createState() => _BlogDetailScreenState();
+}
+
+class _BlogDetailScreenState extends State<BlogDetailScreen> {
+  bool isFavorite = false;
+
   @override
   Widget build(BuildContext context) {
     final blog = ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
@@ -22,6 +29,9 @@ class BlogDetailScreen extends StatelessWidget {
     final String imageUrl = blog['image_url'] ?? '';
     final String content = blog['content'] ?? 'Content  ...';
 
+    // Check if the blog is already marked as favorite
+    isFavorite = blog['isFavorite'] ?? false;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
@@ -31,8 +41,6 @@ class BlogDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
-
             if (imageUrl.isNotEmpty)
               Image.network(imageUrl),
             const SizedBox(height: 16),
@@ -40,7 +48,18 @@ class BlogDetailScreen extends StatelessWidget {
             const SizedBox(height: 16),
             Text(content),
 
-            const Icon(Icons.favorite),
+               IconButton(
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? Colors.red : null,
+            ),
+            onPressed: () {
+              setState(() {
+                isFavorite = !isFavorite;
+                blog['isFavorite'] = isFavorite; // Update the blog's favorite status
+              });
+            },
+          ),
           ],
         ),
       ),
