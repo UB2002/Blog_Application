@@ -16,3 +16,5 @@ This project is a starting point for a Flutter application.(you need to have flu
 ```sh
  flutter run
 ```
+
+![Screenshot (41)] (https://github.com/UB2002/Blog_Application/blob/main/Screenshot%202024-08-16%20185854.png)
